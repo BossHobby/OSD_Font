@@ -1,3 +1,12 @@
 # QS HD Fonts
 
-...nothing to see here, move along
+## Walksnail
+
+- unzip walksnail.zip to your sdcard
+- insert sdcard into vtx/goggle
+- Settings -> Display -> Font Update
+- Font should come up with "Custom OSD" on auto
+
+## DJI
+
+...soon...
