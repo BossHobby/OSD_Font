@@ -28,6 +28,10 @@ dji_bg_color = Color("transparent")
 ws_output_path = "walksnail/WS_QUIC_%d.png"
 ws_bg_color = Color("transparent")
 
+preview_output_path = "preview.png"
+preview_scale = 2
+preview_bg_color = Color("transparent")
+
 
 def extract_glyphs(scale, background):
     glyphs = []
@@ -126,8 +130,33 @@ def generate_ws(output_path, scale):
         img.save(filename=output_path)
 
 
+def generate_preview(output_path, scale):
+    glyphs = extract_glyphs(scale, preview_bg_color)
+
+    with Image(
+        width=font_width * scale * char_width,
+        height=font_height * scale * char_height,
+        background=preview_bg_color,
+    ) as img:
+        for y in range(font_height):
+            for x in range(font_width):
+                img.import_pixels(
+                    x * scale * char_width,
+                    y * scale * char_height,
+                    scale * char_width,
+                    scale * char_height,
+                    "RGBA",
+                    "char",
+                    glyphs[y * font_width + x],
+                )
+
+        print("generating %s" % output_path)
+        img.save(filename=output_path)
+
+
 generate_hdzero(hdzero_output_path, hdzero_scale)
 generate_dji(dji_output_path, dji_scale)
 generate_dji(dji_hd_output_path, dji_hd_scale)
 generate_ws(ws_output_path % 24, 2)
 generate_ws(ws_output_path % 36, 3)
+generate_preview(preview_output_path, preview_scale)
